@@ -1,0 +1,13 @@
+# If you want to store data by a database file put 'sqlite' on storage-method.
+# Or if you want to store data on database server put 'mysql' on storage-method.
+database:
+  storage-method: sqlite
+  mysql:
+    host: 'localhost'
+    port: 3306
+    username: 'yourusername'
+    password: 'yourpassword'
+    database: 'chattags'
+
+before-name: true
+no-permission: '&cNo permission.'

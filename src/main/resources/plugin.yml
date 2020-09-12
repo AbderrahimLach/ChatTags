@@ -1,0 +1,9 @@
+name: ChatTags
+version: 4.0-SNAPSHOT
+main: com.abderrahimlach.ChatTagsMain
+author: AbderrahimLach
+commands:
+  tags:
+    aliases: [chattags, prefix]
+  tag:
+    description: Allows to control tags by an admin.  
