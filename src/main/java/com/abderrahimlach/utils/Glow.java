@@ -1,13 +1,14 @@
 package com.abderrahimlach.utils;
 
+import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.enchantments.EnchantmentTarget;
 import org.bukkit.inventory.ItemStack;
 
 public class Glow extends Enchantment {
 
-	  public Glow(int id) {
-	      super(id);
+	  public Glow(NamespacedKey key) {
+	      super(key);
 	  }
 
 	  @Override
@@ -24,8 +25,18 @@ public class Glow extends Enchantment {
 	  public EnchantmentTarget getItemTarget() {
 	      return null;
 	  }
-
-	  @Override
+	
+	@Override
+	public boolean isTreasure() {
+		return false;
+	}
+	
+	@Override
+	public boolean isCursed() {
+		return false;
+	}
+	
+	@Override
 	  public int getMaxLevel() {
 	      return 0;
 	  }

@@ -81,11 +81,11 @@ public class Events implements Listener {
 	// Tags Pages.
 	@EventHandler
 	public void onInv(InventoryClickEvent e) {
-		if(e.getInventory().getName().contains("Chat Tags")) {
+		if(e.getView().getTitle().contains("Chat Tags")) {
 			ItemStack item = e.getCurrentItem();
 			Player player = (Player)e.getWhoClicked();
 			if(item != null && item.getType() != Material.AIR) {
-				if(item.getType() == Material.MELON || item.getType() == Material.SPECKLED_MELON
+				if(item.getType() == Material.MELON || item.getType() == Material.GLISTERING_MELON_SLICE
 						&& item.getItemMeta().getDisplayName().endsWith(")")) {
 					String title = ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName());
 					int page = Integer.parseInt(title.substring(title.lastIndexOf("/") - 1, title.lastIndexOf("/")));
@@ -98,7 +98,7 @@ public class Events implements Listener {
 	@EventHandler
 	public void onInventory(InventoryClickEvent e) {
 		
-		if(e.getInventory().getName().contains("Chat Tags")) {
+		if(e.getView().getTitle().contains("Chat Tags")) {
 			ItemStack item = e.getCurrentItem();
 			Player player = ((Player)e.getWhoClicked());
 			if(item.getType() != Material.AIR

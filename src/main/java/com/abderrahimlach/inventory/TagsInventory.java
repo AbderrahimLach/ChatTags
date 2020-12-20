@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
@@ -28,7 +29,7 @@ public class TagsInventory {
     	Pagination<TagsManager> pagination = new Pagination<>(21, TagsData.getTags());
     	Inventory inv = Bukkit.createInventory(null, 45, "Chat Tags §7(§6"+(page+1)+"/"+pagination.totalPages()+"§7)");
 		Profile profile = Profile.getProfileByUuid(player.getUniqueId());
-		ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte)15);
+		ItemStack glass = new ItemStack(Material.LEGACY_STAINED_GLASS_PANE, 1, (byte)15);
 		ItemMeta glassm = glass.getItemMeta();
 		glassm.setDisplayName("§c");
 		
@@ -38,7 +39,7 @@ public class TagsInventory {
         meta.setDisplayName("§aNext page §7(§6"+(page+1)+"§7/"+"§6"+pagination.totalPages()+"§7)");
         nextpage.setItemMeta(meta);
         
-        ItemStack prevpage = new ItemStack(Material.SPECKLED_MELON);
+        ItemStack prevpage = new ItemStack(Material.GLISTERING_MELON_SLICE);
         ItemMeta meta2 = prevpage.getItemMeta();
         meta2.setDisplayName("§cPrevious page §7(§6"+(page)+"§7/"+"§6"+pagination.totalPages()+"§7)");
         prevpage.setItemMeta(meta2);
@@ -81,7 +82,7 @@ public class TagsInventory {
 			lore.add("§aShows up as:");
 			lore.add(tags.getData().getPrefix());
 			lore.add(" ");
-			Glow glow = new Glow(1);
+			Glow glow = new Glow(Enchantment.PROTECTION_ENVIRONMENTAL.getKey());
 			if(profile.getAvailableTagsByList().contains(tags.getData().getName())) {
 				if(tags.getData().getName().equals(profile.getCurrentTag().getData().getName())) {
 					lore.add("§eClick to unequip");
