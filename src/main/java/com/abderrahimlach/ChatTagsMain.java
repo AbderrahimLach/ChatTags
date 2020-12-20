@@ -4,6 +4,7 @@ import java.io.File;
 
 import java.lang.reflect.Field;
 
+import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -68,7 +69,7 @@ public class ChatTagsMain extends JavaPlugin {
             e.printStackTrace();
         }
         try {
-            Glow glow = new Glow(70);
+            Glow glow = new Glow(Enchantment.PROTECTION_ENVIRONMENTAL.getKey());
             Enchantment.registerEnchantment(glow);
         }
         catch (IllegalArgumentException e){

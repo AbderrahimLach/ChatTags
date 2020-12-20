@@ -2,6 +2,7 @@ name: ChatTags
 version: 4.0-SNAPSHOT
 main: com.abderrahimlach.ChatTagsMain
 author: AbderrahimLach
+api-version: 1.16
 commands:
   tags:
     aliases: [chattags, prefix]
