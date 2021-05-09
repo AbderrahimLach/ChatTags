@@ -51,7 +51,7 @@ public class MySQLManager {
 				if(pl.getConfig().getString("database.storage-method").equalsIgnoreCase("mysql")) {
 					Bukkit.getConsoleSender().sendMessage("§a[ChatTags] Connecting to mysql server...");
 					Class.forName("com.mysql.jdbc.Driver");
-					connection = (Connection) DriverManager.getConnection("jdbc:mysql://" + this.host+ ":" + getPort() + "/" + this.database+"?useUnicode=true&characterEncoding=UTF-8&useFastDateParsing=false&tcpKeepAlive=true", this.user, this.pass);
+					connection = (Connection) DriverManager.getConnection("jdbc:mysql://" + this.host+ ":" + getPort() + "/" + this.database+"?useUnicode=true&characterEncoding=UTF-8&useFastDateParsing=false&tcpKeepAlive=true&autoReconnect=true", this.user, this.pass);
 					Bukkit.getConsoleSender().sendMessage("§a[ChatTags] MySQL has been successfully connected.");
 					
 				}else if(pl.getConfig().getString("database.storage-method").equalsIgnoreCase("sqlite")) {
