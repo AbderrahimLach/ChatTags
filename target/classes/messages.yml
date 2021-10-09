@@ -1,0 +1,35 @@
+
+tag:
+  created: "&aTag %tag% &ahas been created!"
+  deleted: "&aTag %tag% &ahas been deleted!"
+  modified: "&aYou've set %tag%&a's %modified_key% to %modified_value%&a."
+  equipped: "&aYou've equipped your %tag% &atag."
+  un-equipped: "&aYou've un-equipped your %tag% &atag."
+  granted: "&aYou've granted %player% access to the %tag% &atag!"
+  granted-player: "&aYou've been granted access to the %tag% &atag!"
+  revoked: "&cYou've revoked %player%'s access to the %tag% &ctag!"
+  revoked-player: "&cYour access to the %tag% &ctag has been revoked!"
+
+error:
+  exists: "&cThis tag already exists!"
+  tag-not-found: "&cThis tag does not exist!"
+  name-exceeded: "&cYou have exceeded the limit of 16 characters"
+  no-tags: "&cThere are currently no tags."
+  tag-already-owned: "&cThis player already owns this tag."
+  tag-not-owned: "&cThis player does not own this tag."
+  tag-not-owned-player: "&cYou don't own this tag."
+
+gui:
+  title: "&aChatTags &7(%current_page%/%total_pages%)"
+  tag-display-name: "%tag%"
+  tag-lore:
+    - "&aPrefix:"
+    - "%tag_prefix%"
+    - " "
+    - "%tag_player_info%"
+  tag-player-info:
+    not-owned: "&cYou don't own this tag"
+    equip: "&aClick here to equip this tag"
+    un-equipp: "&eClick here to un-equip this tag"
+  next-page: "&aNext page &7(%next_page%/%total_pages%)"
+  previous-page: "&aPrevious page &7(%previous_page%/%total_pages%)"
