@@ -18,6 +18,7 @@ import org.bukkit.inventory.Inventory;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author AbderrahimLach
@@ -78,7 +79,7 @@ public class TagMenu extends PaginatedMenu<Tag> {
             this.updateInventory();
         };
         List<Tag> tags = this.getCurrentPageList();
-        int currentIndex = 9; // Start
+        AtomicInteger currentIndex = new AtomicInteger(9);
         PlayerData playerData = this.getPlayerManager().getPlayer(player.getUniqueId());
         for(Tag tag : tags){
             String prefix = tag.getPrefix() != null ? tag.getPrefix() : "&cN/A";
@@ -99,8 +100,7 @@ public class TagMenu extends PaginatedMenu<Tag> {
             MenuItem item = new MenuItem(Material.NAME_TAG, tagDisplayName, action);
             item.setItemKey(tag.getName());
             item.setLore(tagLore);
-            this.setSlot(currentIndex, item);
-            currentIndex++;
+            this.setSlot(currentIndex.getAndIncrement(), item);
         }
         return super.build(player);
     }
