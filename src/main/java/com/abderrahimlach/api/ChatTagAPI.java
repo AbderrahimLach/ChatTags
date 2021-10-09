@@ -65,7 +65,7 @@ public class ChatTagAPI {
      * @param player The targeted {@link Player}
      * @return A {@link Collection} of the player's currently owned tags
      */
-    public Collection<Tag> getTags(Player player) {
+    public Collection<Tag> getTags(@NonNull Player player) {
         return getTags(player.getUniqueId());
     }
 
