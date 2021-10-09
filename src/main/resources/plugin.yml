@@ -1,9 +1,6 @@
 name: ChatTags
-version: 4.0-SNAPSHOT
-main: com.abderrahimlach.ChatTagsMain
+version: ${project.version}
+main: com.abderrahimlach.TagPlugin
 author: AbderrahimLach
-commands:
-  tags:
-    aliases: [chattags, prefix]
-  tag:
-    description: Allows to control tags by an admin.  
+description: Create your own creative tags with a cool UI and much more!
+softdepend: [PlaceholderAPI]
