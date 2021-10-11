@@ -10,6 +10,7 @@ import com.abderrahimlach.listeners.PlayerListener;
 import com.abderrahimlach.management.MenuManager;
 import com.abderrahimlach.management.PlayerManager;
 import com.abderrahimlach.management.TagManager;
+import com.abderrahimlach.utility.Metrics;
 import lombok.Getter;
 
 /**
@@ -42,6 +43,7 @@ public class TagPlugin extends BasePlugin {
         this.menuManager = new MenuManager();
 
         new ChatTagAPI(this);
+        new Metrics(this, 6060);
         if(this.isPluginEnabled("PlaceholderAPI")) {
             PAPIExpansion expansion = new PAPIExpansion(this);
             expansion.register();
