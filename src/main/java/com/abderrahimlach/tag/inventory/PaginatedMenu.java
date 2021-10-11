@@ -16,10 +16,11 @@ import java.util.List;
 /**
  * @author AbderrahimLach
  */
+@Getter
 public abstract class PaginatedMenu<T> extends InventoryUI {
 
-    @Getter private int page = 1;
-    @Getter private final int pageSize;
+    private int page = 1;
+    private final int pageSize;
 
     public PaginatedMenu(TagPlugin plugin, String title, int rows, int pageSize) {
         super(plugin, title, rows);
