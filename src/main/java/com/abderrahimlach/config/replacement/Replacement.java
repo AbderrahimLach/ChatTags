@@ -10,7 +10,7 @@ public class Replacement {
 
     public Replacement(String key, String replacement, ReplacementChar replacementChar) {
         this.key = key;
-        this.replacement = replacement;
+        this.replacement = (replacement != null ? replacement : "");
         this.replacementChar = replacementChar;
     }
 
