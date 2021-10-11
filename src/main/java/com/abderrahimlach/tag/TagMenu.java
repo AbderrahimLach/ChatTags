@@ -17,6 +17,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -81,6 +82,8 @@ public class TagMenu extends PaginatedMenu<Tag> {
         List<Tag> tags = this.getCurrentPageList();
         AtomicInteger currentIndex = new AtomicInteger(9);
         PlayerData playerData = this.getPlayerManager().getPlayer(player.getUniqueId());
+        Comparator<Tag> comparator = Comparator.comparing(tag -> playerData.getTags().containsValue(tag));
+        tags.sort(comparator.reversed());
         for(Tag tag : tags){
             String prefix = tag.getPrefix() != null ? tag.getPrefix() : "&cN/A";
             String tagDisplayName = ConfigKeys.GUI_TAG_DISPLAY_NAME.getString(new Replacement("tag", tag.getDisplayName()));
