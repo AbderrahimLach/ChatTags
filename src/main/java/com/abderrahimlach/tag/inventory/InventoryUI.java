@@ -71,7 +71,7 @@ public abstract class InventoryUI {
     public void updateInventory() {
         for(int i = 0; i < this.items.length; i++) {
             MenuItem button = this.items[i];
-            if(button == null) continue;
+            if(button == null || !button.isClickable()) continue;
             this.inventory.setItem(i, button.getItem());
         }
     }
