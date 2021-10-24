@@ -13,6 +13,7 @@ import com.abderrahimlach.utility.Util;
 
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
+import java.util.logging.Level;
 
 /**
  * @author AbderrahimLach
@@ -22,13 +23,8 @@ public class Storage {
     private final TagPlugin plugin;
     private StorageRepository<?> connectionRepository;
 
-    public Storage(TagPlugin plugin, ConfigurationAdapter configuration){
+    public Storage(TagPlugin plugin, ConfigurationAdapter config){
         this.plugin = plugin;
-        loadStorageMethod(configuration);
-    }
-
-
-    private void loadStorageMethod(ConfigurationAdapter config){
         String host = config.getString("storage.host");
         String username = config.getString("storage.username");
         String password = config.getString("storage.password");
@@ -50,6 +46,10 @@ public class Storage {
             }
             case MONGODB: {
                 this.connectionRepository = new MongoDBConnection(this.plugin, credentials);
+            }
+            default: {
+                plugin.getLogger().log(Level.SEVERE, "Invalid storage method provided in config.yml. Disabling plugin");
+                plugin.getPluginLoader().disablePlugin(plugin);
             }
         }
     }
