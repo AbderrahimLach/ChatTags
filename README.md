@@ -1,3 +1,5 @@
+[![](https://jitpack.io/v/AbderrahimLach/ChatTags.svg)](https://jitpack.io/#AbderrahimLach/ChatTags)
+
 # ChatTags
 Create your own creative tags with a cool UI and much more!
 
