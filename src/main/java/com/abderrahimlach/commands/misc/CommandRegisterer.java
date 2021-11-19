@@ -6,7 +6,6 @@ import com.abderrahimlach.config.ConfigKeys;
 import com.abderrahimlach.management.PlayerManager;
 import com.abderrahimlach.management.TagManager;
 import com.abderrahimlach.tag.Tag;
-import lombok.Data;
 import org.bukkit.ChatColor;
 
 import java.util.Arrays;
