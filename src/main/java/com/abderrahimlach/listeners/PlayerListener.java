@@ -1,12 +1,12 @@
 package com.abderrahimlach.listeners;
 
-import com.abderrahimlach.TagPlugin;
 import com.abderrahimlach.config.ConfigKeys;
 import com.abderrahimlach.config.replacement.BracketReplacement;
 import com.abderrahimlach.config.replacement.Replacement;
 import com.abderrahimlach.data.PlayerData;
 import com.abderrahimlach.management.PlayerManager;
 import com.abderrahimlach.tag.Tag;
+import lombok.Data;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -18,13 +18,10 @@ import org.bukkit.event.player.PlayerQuitEvent;
 /**
  * @author AbderrahimLach
  */
+@Data
 public class PlayerListener implements Listener {
 
     private final PlayerManager playerManager;
-
-    public PlayerListener(TagPlugin plugin){
-        this.playerManager = plugin.getPlayerManager();
-    }
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e){
