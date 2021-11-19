@@ -12,7 +12,6 @@ import com.abderrahimlach.management.TagManager;
 import com.abderrahimlach.tag.Tag;
 import com.abderrahimlach.utility.Util;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
