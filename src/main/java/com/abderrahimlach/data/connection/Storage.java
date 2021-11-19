@@ -1,7 +1,7 @@
 package com.abderrahimlach.data.connection;
 
 import com.abderrahimlach.TagPlugin;
-import com.abderrahimlach.config.ConfigurationAdapter;
+import com.abderrahimlach.config.ConfigKeys;
 import com.abderrahimlach.data.PlayerData;
 import com.abderrahimlach.data.connection.impl.MongoDBConnection;
 import com.abderrahimlach.data.connection.impl.MySQLConnection;
@@ -20,32 +20,28 @@ import java.util.logging.Level;
  */
 public class Storage {
 
-    private final TagPlugin plugin;
     private StorageRepository<?> connectionRepository;
 
-    public Storage(TagPlugin plugin, ConfigurationAdapter config){
-        this.plugin = plugin;
-        String host = config.getString("storage.host");
-        String username = config.getString("storage.username");
-        String password = config.getString("storage.password");
-        String database = config.getString("storage.database");
-        int maximumPoolSize = config.getInteger("storage.maximum-pool-size");
+    public Storage(TagPlugin plugin){
+        String host = ConfigKeys.STORAGE_HOSTNAME.getString();
+        String username = ConfigKeys.STORAGE_USERNAME.getString();
+        String password = ConfigKeys.STORAGE_PASSWORD.getString();
+        String database = ConfigKeys.STORAGE_DATABASE.getString();
+        int maximumPoolSize = ConfigKeys.STORAGE_MAXIMUM_POOL_SIZE.getInteger();
 
-        String storageMethodString = config.getString("storage-method");
-        StorageMethod storageMethod = StorageMethod.valueOf(storageMethodString.toUpperCase());
+        StorageMethod storageMethod = StorageMethod.valueOf(ConfigKeys.STORAGE_METHOD.getString().toUpperCase());
+
         int port = storageMethod.getDefaultPort();
-        if(config.contains("storage.port")) {
-            port = config.getInteger("storage.port");
-        }
         ConnectionCredentials credentials = new ConnectionCredentials(host, username, password, database, port, maximumPoolSize);
 
         switch (storageMethod) {
             case MYSQL: {
-                this.connectionRepository = new MySQLConnection(this.plugin, credentials);
-                return;
+                connectionRepository = new MySQLConnection(plugin, credentials);
+                break;
             }
             case MONGODB: {
-                this.connectionRepository = new MongoDBConnection(this.plugin, credentials);
+                connectionRepository = new MongoDBConnection(plugin, credentials);
+                break;
             }
             default: {
                 plugin.getLogger().log(Level.SEVERE, "Invalid storage method provided in config.yml. Disabling plugin");
