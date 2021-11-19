@@ -21,6 +21,15 @@ public enum ConfigKeys {
     TAG_FORMAT_ENABLED("config.yml", "tag-format.enabled", false),
     TAG_FORMAT("config.yml", "tag-format.format", "{tag} <%1$s> %2$s"),
 
+    // Storage
+    STORAGE_METHOD("config.yml", "storage-method", "MYSQL"),
+
+    STORAGE_HOSTNAME("config.yml", "storage.host", "localhost"),
+    STORAGE_USERNAME("config.yml", "storage.username", "username"),
+    STORAGE_PASSWORD("config.yml", "storage.password", "password"),
+    STORAGE_DATABASE("config.yml", "storage.database", "chattags"),
+    STORAGE_MAXIMUM_POOL_SIZE("config.yml", "storage.maximum-pool-size", 10, false),
+
     // ---- messages.yml messages ----
     TAG_CREATED("tag.created", "&aTag %tag% &ahas been created!"),
     TAG_DELETED("tag.deleted", "&aTag %tag% &ahas been deleted!"),
@@ -51,12 +60,18 @@ public enum ConfigKeys {
 
     private final String key;
     private final String configFile;
+    private final boolean overwrite;
     @Setter private Object defaultValue;
 
-    ConfigKeys(String configFile, String key, Object defaultValue) {
+    ConfigKeys(String configFile, String key, Object defaultValue, boolean overwrite) {
         this.configFile = configFile;
         this.key = key;
         this.defaultValue = defaultValue;
+        this.overwrite = overwrite;
+    }
+
+    ConfigKeys(String configFile, String key, Object defaultValue) {
+        this(configFile, key, defaultValue, true);
     }
 
     ConfigKeys(String key, Object defaultValue){
