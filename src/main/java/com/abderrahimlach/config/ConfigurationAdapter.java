@@ -21,7 +21,6 @@ public class ConfigurationAdapter {
     public ConfigurationAdapter(TagPlugin plugin, String file) {
         this.plugin = plugin;
         this.file = new File(plugin.getDataFolder(), file);
-        load();
     }
 
     public void loadConfiguration(){
@@ -39,24 +38,6 @@ public class ConfigurationAdapter {
         }
     }
 
-    public void reload() {
-        load();
-    }
-
-    public void load() {
-        loadConfiguration();
-        for(ConfigKeys configKey : ConfigKeys.values()) {
-            if(!configKey.getConfigFile().equals(file.getName())) continue;
-            String key = configKey.getKey();
-            if(!this.contains(key)) {
-                this.config.set(key, configKey.getDefaultValue());
-                continue;
-            }
-            Object value = this.config.get(key);
-            configKey.setDefaultValue(value);
-        }
-    }
-
     public String getString(String path){
         return config.getString(path);
     }
@@ -71,5 +52,13 @@ public class ConfigurationAdapter {
 
     public boolean contains(String path) {
         return config.contains(path);
+    }
+
+    public void set(String path, Object object) {
+        config.set(path, object);
+    }
+
+    public Object get(String path) {
+        return config.get(path);
     }
 }
