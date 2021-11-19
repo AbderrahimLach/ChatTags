@@ -1,7 +1,7 @@
 # Storage methods:
-# - MySQL (3306)
-# - MongoDB (27017)
-storage-method: mysql
+# - MYSQL (3306)
+# - MONGODB (27017)
+storage-method: MYSQL
 
 # You can specify a port if differs
 storage:
