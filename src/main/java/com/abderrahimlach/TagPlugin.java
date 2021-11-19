@@ -3,7 +3,8 @@ package com.abderrahimlach;
 import com.abderrahimlach.api.ChatTagAPI;
 import com.abderrahimlach.commands.TagCommand;
 import com.abderrahimlach.commands.TagsCommand;
-import com.abderrahimlach.config.ConfigurationAdapter;
+import com.abderrahimlach.commands.misc.CommandRegisterer;
+import com.abderrahimlach.config.ConfigHandler;
 import com.abderrahimlach.data.connection.Storage;
 import com.abderrahimlach.listeners.MenuListener;
 import com.abderrahimlach.listeners.PlayerListener;
@@ -19,28 +20,23 @@ import lombok.Getter;
 @Getter
 public class TagPlugin extends BasePlugin {
 
-    private PlayerManager playerManager;
-    private TagManager tagManager;
-    private MenuManager menuManager;
+    private final PlayerManager playerManager = new PlayerManager(this);
+    private final TagManager tagManager = new TagManager(this);
+    private final MenuManager menuManager = new MenuManager();
+    private final ConfigHandler configHandler = new ConfigHandler(this);
+    private final CommandRegisterer commandRegisterer = new CommandRegisterer(this);
 
     private Storage storage;
-
-    private ConfigurationAdapter defaultConfiguration, messagesConfiguration;
 
     @Override
     public void onEnable() {
 
-        this.defaultConfiguration = new ConfigurationAdapter(this, "config.yml");
-        this.messagesConfiguration = new ConfigurationAdapter(this, "messages.yml");
+        configHandler.addCollection(true, "config.yml", "messages.yml");
 
-        this.storage = new Storage(this, defaultConfiguration);
+        storage = new Storage(this);
         log("Connecting to the " + this.storage.getName() + " Storage...");
-        this.storage.connect();
+        storage.connect();
         log("Connection successfully established!");
-
-        this.playerManager = new PlayerManager(this);
-        this.tagManager = new TagManager(this);
-        this.menuManager = new MenuManager();
 
         new ChatTagAPI(this);
         new Metrics(this, 6060);
@@ -49,19 +45,18 @@ public class TagPlugin extends BasePlugin {
             expansion.register();
         }
 
-        registerListener(new PlayerListener(this), new MenuListener(this));
-        registerCommands(new TagCommand(this), new TagsCommand(this));
+        registerListener(new PlayerListener(playerManager), new MenuListener(menuManager));
+        commandRegisterer.registerCommands(new TagCommand(this), new TagsCommand(this));
     }
 
     @Override
     public void onDisable() {
-        this.defaultConfiguration.saveConfiguration();
-        this.messagesConfiguration.saveConfiguration();
+        configHandler.saveConfigurations();
 
-        this.playerManager.savePlayers();
-        this.tagManager.saveTags();
+        playerManager.savePlayers();
+        tagManager.saveTags();
 
         log("Closing storage connection...");
-        this.storage.close();
+        storage.close();
     }
 }
