@@ -11,6 +11,8 @@ import com.abderrahimlach.management.PlayerManager;
 import com.abderrahimlach.management.TagManager;
 import com.abderrahimlach.tag.Tag;
 import com.abderrahimlach.utility.Util;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
@@ -19,23 +21,23 @@ import org.bukkit.entity.Player;
 import java.util.Collection;
 import java.util.UUID;
 
+
+
 /**
  * @author AbderrahimLach
  */
+
 @CommandAlias("tag")
 @CommandPermission("chattags.admin")
+@Data
 public class TagCommand extends BaseCommand {
 
     private final TagPlugin plugin;
 
-    private final TagManager tagManager;
-    private final PlayerManager playerManager;
-
-    public TagCommand(TagPlugin plugin) {
-        this.plugin = plugin;
-        this.tagManager = plugin.getTagManager();
-        this.playerManager = plugin.getPlayerManager();
-    }
+    @Dependency
+    private TagManager tagManager;
+    @Dependency
+    private PlayerManager playerManager;
 
     @Default
     @HelpCommand
@@ -93,12 +95,8 @@ public class TagCommand extends BaseCommand {
     @Subcommand("setdisplayname")
     @Syntax("<tag> <displayName>")
     @Description("Set display name for a tag")
-    public void onDisplayNameSet(CommandSender sender, String tagName, String displayName) {
-        Tag tag = this.tagManager.getTag(tagName);
-        if(tag == null) {
-            ConfigKeys.sendMessage(ConfigKeys.TAG_NOT_FOUND, sender);
-            return;
-        }
+    public void onDisplayNameSet(CommandSender sender, Tag tag, String displayName) {
+        if(tag == null) return;
         this.tagManager.setDisplayName(tag, displayName);
         ConfigKeys.sendMessage(ConfigKeys.TAG_MODIFIED, sender,
                 new Replacement("tag", tag.getName()),
@@ -109,15 +107,12 @@ public class TagCommand extends BaseCommand {
     @Subcommand("addtag")
     @Syntax("<player> <tag>")
     @Description("Give a player access to a tag")
-    public void onAddTag(CommandSender sender, @Flags("other") Player target, String tagName){
-        Tag tag = this.tagManager.getTag(tagName);
-        if(tag == null) {
-            ConfigKeys.sendMessage(ConfigKeys.TAG_NOT_FOUND, sender);
-            return;
-        }
+    public void onAddTag(CommandSender sender, @Flags("other") Player target, Tag tag){
+        if(tag == null) return;
+
         UUID uuid = target.getUniqueId();
         PlayerData playerData = this.playerManager.getPlayer(uuid);
-        if(playerData.hasTag(tagName)){
+        if(playerData.hasTag(tag.getName())){
             ConfigKeys.sendMessage(ConfigKeys.TAG_ALREADY_OWNED, sender);
             return;
         }
@@ -131,14 +126,12 @@ public class TagCommand extends BaseCommand {
     @Subcommand("removetag")
     @Syntax("<player> <tag>")
     @Description("Remove a player's access to a tag")
-    public void onRemoveTag(CommandSender sender, @Flags("other") Player target, String tagName){
+    public void onRemoveTag(CommandSender sender, @Flags("other") Player target, Tag tag){
+        if(tag == null) return;
+
         UUID uuid = target.getUniqueId();
         PlayerData playerData = this.playerManager.getPlayer(uuid);
-        Tag tag = playerData.getTag(tagName);
-        if(tag == null){
-            ConfigKeys.sendMessage(ConfigKeys.TAG_NOT_OWNED, sender);
-            return;
-        }
+
         if(playerData.getEquippedTag() == tag){
             playerData.setEquippedTag(null);
         }
@@ -189,8 +182,7 @@ public class TagCommand extends BaseCommand {
     @Subcommand("reload")
     @Description("Reload all the config files")
     public void onReload(CommandSender sender) {
-        plugin.getDefaultConfiguration().reload();
-        plugin.getMessagesConfiguration().reload();
+        plugin.getConfigHandler().updateConfigurationsKeys();
         sender.sendMessage(Util.translateMessage("&bChatTags configurations has been reloaded!"));
     }
 }
