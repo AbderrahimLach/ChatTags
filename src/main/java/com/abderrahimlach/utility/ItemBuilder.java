@@ -25,7 +25,7 @@ public class ItemBuilder {
 
     public ItemBuilder name(String name) {
         ItemMeta meta = this.is.getItemMeta();
-        meta.setDisplayName(Util.translateMessage(name));
+        meta.setDisplayName(PluginUtility.translateMessage(name));
         this.is.setItemMeta(meta);
         return this;
     }

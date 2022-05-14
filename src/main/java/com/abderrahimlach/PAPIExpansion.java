@@ -1,7 +1,7 @@
 package com.abderrahimlach;
 
-import com.abderrahimlach.data.PlayerData;
-import com.abderrahimlach.management.PlayerManager;
+import com.abderrahimlach.player.PlayerData;
+import com.abderrahimlach.player.PlayerManager;
 import com.abderrahimlach.tag.Tag;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.entity.Player;

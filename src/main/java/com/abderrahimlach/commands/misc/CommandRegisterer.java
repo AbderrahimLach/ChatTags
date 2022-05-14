@@ -2,9 +2,10 @@ package com.abderrahimlach.commands.misc;
 
 import co.aikar.commands.*;
 import com.abderrahimlach.TagPlugin;
-import com.abderrahimlach.config.ConfigKeys;
-import com.abderrahimlach.management.PlayerManager;
-import com.abderrahimlach.management.TagManager;
+import com.abderrahimlach.internal.config.ConfigHandler;
+import com.abderrahimlach.internal.config.ConfigKeys;
+import com.abderrahimlach.player.PlayerManager;
+import com.abderrahimlach.tag.TagManager;
 import com.abderrahimlach.tag.Tag;
 import org.bukkit.ChatColor;
 
@@ -22,16 +23,15 @@ public class CommandRegisterer {
     public CommandRegisterer(TagPlugin plugin) {
         this.plugin = plugin;
         commandManager = new BukkitCommandManager(plugin);
-    }
-
-    public void registerCommands(BaseCommand... commands){
         commandManager.enableUnstableAPI("help");
         commandManager.setFormat(MessageType.HELP, ChatColor.AQUA, ChatColor.BLUE);
         commandManager.setFormat(MessageType.SYNTAX, ChatColor.AQUA, ChatColor.BLUE);
         commandManager.setFormat(MessageType.INFO, ChatColor.AQUA, ChatColor.BLUE);
 
         registerCommandContexts();
+    }
 
+    public void registerCommands(BaseCommand... commands){
         Arrays.asList(commands).forEach(commandManager::registerCommand);
     }
 
@@ -39,13 +39,13 @@ public class CommandRegisterer {
         TagManager tagManager = plugin.getTagManager();
         commandManager.registerDependency(PlayerManager.class, plugin.getPlayerManager());
         commandManager.registerDependency(TagManager.class, tagManager);
+        commandManager.registerDependency(ConfigHandler.class, plugin.getConfigHandler());
         CommandContexts<BukkitCommandExecutionContext> commandContexts = commandManager.getCommandContexts();
         commandContexts.registerContext(Tag.class, resolver -> {
             String arg = resolver.popFirstArg();
             Tag tag = tagManager.getTag(arg);
             if(tag == null) {
-                ConfigKeys.sendMessage(ConfigKeys.TAG_NOT_FOUND, resolver.getSender());
-                return null;
+                throw new InvalidCommandArgument(ConfigKeys.TAG_NOT_FOUND.getValue());
             }
             return tag;
         });

@@ -1,7 +1,7 @@
 package com.abderrahimlach.api.events;
 
 import com.abderrahimlach.api.events.abstracts.AbstractPlayerTagEvent;
-import com.abderrahimlach.data.PlayerData;
+import com.abderrahimlach.player.PlayerData;
 import com.abderrahimlach.tag.Tag;
 
 /**

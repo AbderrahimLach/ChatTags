@@ -1,9 +1,9 @@
 package com.abderrahimlach.api;
 
 import com.abderrahimlach.TagPlugin;
-import com.abderrahimlach.data.PlayerData;
-import com.abderrahimlach.management.PlayerManager;
-import com.abderrahimlach.management.TagManager;
+import com.abderrahimlach.player.PlayerData;
+import com.abderrahimlach.player.PlayerManager;
+import com.abderrahimlach.tag.TagManager;
 import com.abderrahimlach.tag.Tag;
 import lombok.Getter;
 import lombok.NonNull;

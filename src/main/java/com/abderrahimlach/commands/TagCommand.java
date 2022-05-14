@@ -3,15 +3,14 @@ package com.abderrahimlach.commands;
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandHelp;
 import co.aikar.commands.annotation.*;
-import com.abderrahimlach.TagPlugin;
-import com.abderrahimlach.config.ConfigKeys;
-import com.abderrahimlach.config.replacement.Replacement;
-import com.abderrahimlach.data.PlayerData;
-import com.abderrahimlach.management.PlayerManager;
-import com.abderrahimlach.management.TagManager;
+import com.abderrahimlach.internal.config.ConfigHandler;
+import com.abderrahimlach.internal.config.ConfigKeys;
+import com.abderrahimlach.internal.config.replacement.Replacement;
+import com.abderrahimlach.player.PlayerData;
+import com.abderrahimlach.player.PlayerManager;
+import com.abderrahimlach.tag.TagManager;
 import com.abderrahimlach.tag.Tag;
-import com.abderrahimlach.utility.Util;
-import lombok.Data;
+import com.abderrahimlach.utility.PluginUtility;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
@@ -28,15 +27,16 @@ import java.util.UUID;
 
 @CommandAlias("tag")
 @CommandPermission("chattags.admin")
-@Data
-public class TagCommand extends BaseCommand {
 
-    private final TagPlugin plugin;
+public class TagCommand extends BaseCommand {
 
     @Dependency
     private TagManager tagManager;
     @Dependency
     private PlayerManager playerManager;
+    @Dependency
+    private ConfigHandler configHandler;
+
 
     @Default
     @HelpCommand
@@ -151,14 +151,14 @@ public class TagCommand extends BaseCommand {
 
         Collection<Tag> playerTags = playerData.getTags().values();
         if(playerTags.isEmpty()) {
-            sender.sendMessage(Util.translateMessage("&cThis player does not own any tag"));
+            sender.sendMessage(PluginUtility.translateMessage("&cThis player does not own any tag"));
             return;
         }
-        sender.sendMessage(Util.translateMessage("&b&l"+target.getName()+"'s Tags:"));
+        sender.sendMessage(PluginUtility.translateMessage("&b&l"+target.getName()+"'s Tags:"));
         sender.sendMessage("");
         for(Tag tag : playerTags) {
             boolean equipped = playerData.getEquippedTag() == tag;
-            sender.sendMessage(Util.translateMessage("&7 - &b"+tag.getName() + (equipped ? " &7(Equipped)" : "")));
+            sender.sendMessage(PluginUtility.translateMessage("&7 - &b"+tag.getName() + (equipped ? " &7(Equipped)" : "")));
         }
     }
 
@@ -170,18 +170,18 @@ public class TagCommand extends BaseCommand {
             ConfigKeys.sendMessage(ConfigKeys.NO_TAGS, sender);
             return;
         }
-        sender.sendMessage(Util.translateMessage("&b&lTags: &7(Display Name, Prefix)"));
+        sender.sendMessage(PluginUtility.translateMessage("&b&lTags: &7(Display Name, Prefix)"));
         sender.sendMessage(" ");
         for(Tag tag : collection){
             String prefix = tag.getPrefix() != null ? tag.getPrefix() : "N/A";
-            sender.sendMessage(Util.translateMessage("&7 - &b" + tag.getName() + " &7("+tag.getDisplayName()+"&7) - "+prefix));
+            sender.sendMessage(PluginUtility.translateMessage("&7 - &b" + tag.getName() + " &7("+tag.getDisplayName()+"&7) - "+prefix));
         }
     }
 
     @Subcommand("reload")
     @Description("Reload all the config files")
     public void onReload(CommandSender sender) {
-        plugin.getConfigHandler().updateConfigurationsKeys();
-        sender.sendMessage(Util.translateMessage("&bChatTags configurations has been reloaded!"));
+        configHandler.reloadConfigurations();
+        sender.sendMessage(PluginUtility.translateMessage("&bChatTags configurations has been reloaded!"));
     }
 }

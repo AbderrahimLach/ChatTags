@@ -1,10 +1,8 @@
 package com.abderrahimlach.api.events.abstracts;
 
 import com.abderrahimlach.tag.Tag;
-import com.abderrahimlach.utility.Util;
+import com.abderrahimlach.utility.PluginUtility;
 import lombok.Getter;
-import lombok.Setter;
-import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
@@ -23,7 +21,7 @@ public abstract class AbstractTagEvent extends Event {
     }
 
     public void call(){
-        Util.callEvent(this);
+        PluginUtility.callEvent(this);
     }
 
     @Override
