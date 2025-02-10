@@ -1,0 +1,6 @@
+name: plugin
+version: ${project.version}
+main: work.directplan.chattags.plugin.ChatTagsPlugin
+api-version: '1.21'
+authors: [ DirectPlan ]
+website: https://directplan.work/chattags/

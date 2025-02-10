@@ -1,6 +1,0 @@
-name: ChatTags
-version: ${project.version}
-main: com.abderrahimlach.TagPlugin
-author: AbderrahimLach
-description: Create your creative tags with a cool UI and much more!
-softdepend: [PlaceholderAPI]
